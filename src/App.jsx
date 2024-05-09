@@ -1,4 +1,6 @@
-import React from "react";
+// import React from "react";
+import { useEffect, useState } from "react";
+
 import { getInitialData } from "./utils/index";
 
 import "./styles/App.css";
@@ -7,104 +9,90 @@ import Header from "./components/Header";
 import Main from "./components/Main";
 import Footer from "./components/Footer";
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
+export default function App() {
+  const [query, setQuery] = useState("");
+  const [notes, setNotes] = useState(getInitialData());
+  const [searchNotes, setSearchNotes] = useState([]);
 
-    this.state = {
-      query: "",
-      notes: getInitialData(),
-      searchNotes: [],
-      dateNow: new Date().getFullYear(),
+  const dateNow = new Date().getFullYear();
+
+  const activeNotes = (searchNotes || notes).filter(
+    (note) => note.archived === false
+  );
+  const archivedNotes = (searchNotes || notes).filter(
+    (note) => note.archived === true
+  );
+
+  function handleOnChange(event) {
+    setQuery(event.target.value);
+  }
+
+  function onAddNote({ title, body }) {
+    const newNote = {
+      id: +new Date(),
+      title,
+      body,
+      createdAt: new Date().toISOString(),
+      archived: false,
     };
 
-    this.onQuerySearchChangeEventHandler =
-      this.onQuerySearchChangeEventHandler.bind(this);
-    this.onClickToSearchQueryHandler =
-      this.onClickToSearchQueryHandler.bind(this);
-    this.onAddNote = this.onAddNote.bind(this);
-    this.onArchiveNote = this.onArchiveNote.bind(this);
-    this.onActiveNote = this.onActiveNote.bind(this);
-    this.onDeleteNote = this.onDeleteNote.bind(this);
-  }
-
-  onAddNote({ title, body }) {
-    this.setState((prevState) => {
-      return {
-        notes: [
-          ...prevState.notes,
-          {
-            id: +new Date(),
-            title,
-            body,
-            archived: false,
-            createdAt: new Date().toISOString(),
-          },
-        ],
-      };
+    setNotes((prevNote) => {
+      return [...prevNote, newNote];
     });
   }
 
-  onArchiveNote(id) {
-    this.setState(() => {
-      return this.state.notes.map((note) =>
-        note.id === id ? (note.archived = true) : note
-      );
-    });
+  function onArchiveNote(id) {
+    const archiveNotes = notes.map((note) =>
+      note.id === id ? { ...note, archived: true } : note
+    );
+    setNotes(archiveNotes);
   }
 
-  onActiveNote(id) {
-    this.setState(() => {
-      return this.state.notes.map((note) =>
-        note.id === id ? (note.archived = false) : note
-      );
-    });
+  function onActiveNote(id) {
+    const activeNotes = notes.map((note) =>
+      note.id === id ? { ...note, archived: false } : note
+    );
+    setNotes(activeNotes);
   }
 
-  onDeleteNote(id) {
-    const notes = this.state.notes.filter((note) => note.id !== id);
-    this.setState({ notes });
+  function onDeleteNote(id) {
+    setNotes(notes.filter((note) => note.id !== id));
   }
 
-  onQuerySearchChangeEventHandler = (event) => {
-    this.setState(() => {
-      return {
-        query: event.target.value,
-      };
-    });
-  };
-
-  onClickToSearchQueryHandler = (event) => {
+  function handleClickToSearchQuery(event) {
     event.preventDefault();
-    this.setState(() => {
-      return {
-        searchNotes: this.state.notes.filter((note) =>
-          note.title.toLowerCase().includes(this.state.query.toLowerCase())
-        ),
-      };
-    });
-  };
-
-  render() {
-    return (
-      <>
-        <Header
-          query={this.state.query}
-          handleOnChange={this.onQuerySearchChangeEventHandler}
-          handleClickToSearchQuery={this.onClickToSearchQueryHandler}
-        />
-        <Main
-          notes={this.state.notes}
-          searchNotes={this.state.searchNotes}
-          addNote={this.onAddNote}
-          archiveNote={this.onArchiveNote}
-          activeNote={this.onActiveNote}
-          deleteNote={this.onDeleteNote}
-        />
-        <Footer date={this.state.dateNow} />
-      </>
+    setSearchNotes(
+      notes.filter((note) =>
+        note.title.toLowerCase().includes(query.toLowerCase())
+      )
     );
   }
-}
 
-export default App;
+  useEffect(() => {
+    setSearchNotes(
+      notes.filter((note) =>
+        note.title.toLowerCase().includes(query.toLowerCase())
+      )
+    );
+  }, [query, notes]);
+
+  return (
+    <>
+      <Header
+        query={query}
+        handleOnChange={handleOnChange}
+        handleClickToSearchQuery={handleClickToSearchQuery}
+      />
+      <Main
+        activeNotes={activeNotes}
+        archivedNotes={archivedNotes}
+        searchNotes={searchNotes}
+        addNote={onAddNote}
+        archiveNote={onArchiveNote}
+        activeNote={onActiveNote}
+        deleteNote={onDeleteNote}
+      />
+      <Footer date={dateNow} />
+    </>
+  );
+}
