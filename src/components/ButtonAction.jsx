@@ -1,5 +1,5 @@
 // eslint-disable-next-line react/prop-types
-export default function ButtonAction({ className, onClick, children }) {
+function ButtonAction({ className, onClick, children }) {
   const buttonClassName = "bg-white p-2 rounded-lg".split(" ");
   buttonClassName.push(className);
 
@@ -9,3 +9,5 @@ export default function ButtonAction({ className, onClick, children }) {
     </button>
   );
 }
+
+export default ButtonAction;

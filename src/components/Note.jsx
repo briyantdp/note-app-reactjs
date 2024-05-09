@@ -9,7 +9,7 @@ import {
 
 import { showFormattedDate } from "../utils";
 
-export default function Note({
+function Note({
   className,
   id,
   title,
@@ -49,3 +49,5 @@ export default function Note({
     </div>
   );
 }
+
+export default Note;

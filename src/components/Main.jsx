@@ -2,7 +2,7 @@
 import CreateNote from "./CreateNote";
 import NoteList from "./NoteList";
 
-export default function Main({
+function Main({
   activeNotes,
   archivedNotes,
   addNote,
@@ -30,3 +30,5 @@ export default function Main({
     </main>
   );
 }
+
+export default Main;

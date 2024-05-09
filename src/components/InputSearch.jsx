@@ -1,9 +1,5 @@
 /* eslint-disable react/prop-types */
-export default function InputSearch({
-  query,
-  handleOnChange,
-  handleClickToSearchQuery,
-}) {
+function InputSearch({ query, handleOnChange, handleClickToSearchQuery }) {
   return (
     <div className="search-input my-6">
       <form onSubmit={handleClickToSearchQuery}>
@@ -26,3 +22,5 @@ export default function InputSearch({
     </div>
   );
 }
+
+export default InputSearch;

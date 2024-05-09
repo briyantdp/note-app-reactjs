@@ -1,5 +1,5 @@
 // eslint-disable-next-line react/prop-types
-export default function Footer({ date }) {
+function Footer({ date }) {
   const footerClassName = "footer py-8 text-center font-mono font-light";
   return (
     <footer className={footerClassName}>
@@ -15,3 +15,5 @@ export default function Footer({ date }) {
     </footer>
   );
 }
+
+export default Footer;

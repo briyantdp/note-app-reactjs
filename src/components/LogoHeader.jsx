@@ -1,4 +1,4 @@
-export default function LogoHeader() {
+function LogoHeader() {
   return (
     <div className="logo">
       <a href="#">
@@ -7,3 +7,5 @@ export default function LogoHeader() {
     </div>
   );
 }
+
+export default LogoHeader;

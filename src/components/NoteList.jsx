@@ -2,7 +2,7 @@
 import Heading from "./Heading";
 import Note from "./Note";
 
-export default function NoteList({
+function NoteList({
   name,
   className,
   notes,
@@ -37,3 +37,5 @@ export default function NoteList({
     </section>
   );
 }
+
+export default NoteList;

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-export default function CreateNote({ addNote }) {
+function CreateNote({ addNote }) {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 
@@ -63,3 +63,5 @@ export default function CreateNote({ addNote }) {
     </section>
   );
 }
+
+export default CreateNote;
