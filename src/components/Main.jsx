@@ -3,7 +3,8 @@ import CreateNote from "./CreateNote";
 import NoteList from "./NoteList";
 
 export default function Main({
-  notes,
+  activeNotes,
+  archivedNotes,
   addNote,
   archiveNote,
   activeNote,
@@ -15,14 +16,14 @@ export default function Main({
       <NoteList
         name="Catatan Aktif"
         className="active-note-list"
-        notes={notes.filter((note) => note.archived === false)}
+        notes={activeNotes}
         archiveNote={archiveNote}
         deleteNote={deleteNote}
       />
       <NoteList
         name="Arsip"
         className="archived-note-list"
-        notes={notes.filter((note) => note.archived === true)}
+        notes={archivedNotes}
         activeNote={activeNote}
         deleteNote={deleteNote}
       />
