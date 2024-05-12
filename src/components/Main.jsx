@@ -1,32 +1,22 @@
-/* eslint-disable react/prop-types */
-import CreateNote from "./CreateNote";
-import NoteList from "./NoteList";
+import { Route, Routes } from "react-router-dom";
 
-function Main({
-  activeNotes,
-  archivedNotes,
-  addNote,
-  archiveNote,
-  activeNote,
-  deleteNote,
-}) {
+import HomePage from "../pages/HomePage";
+import AddPage from "../pages/AddPage";
+import ArchivedPage from "../pages/ArchivedPage";
+import DetailPage from "../pages/DetailPage";
+import NotFoundPage from "../pages/NotFoundPage";
+
+function Main() {
   return (
-    <main className="main px-8">
-      <CreateNote addNote={addNote} />
-      <NoteList
-        name="Catatan Aktif"
-        className="active-note-list"
-        notes={activeNotes}
-        archiveNote={archiveNote}
-        deleteNote={deleteNote}
-      />
-      <NoteList
-        name="Arsip"
-        className="archived-note-list"
-        notes={archivedNotes}
-        activeNote={activeNote}
-        deleteNote={deleteNote}
-      />
+    <main className="px-8">
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/notes/new" element={<AddPage />} />
+        <Route path="/archives" element={<ArchivedPage />} />
+        <Route path="/notes/:id" element={<DetailPage />} />
+        <Route path="/not-found" element={<NotFoundPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
     </main>
   );
 }

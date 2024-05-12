@@ -1,53 +1,31 @@
-/* eslint-disable react/prop-types */
-import ButtonAction from "./ButtonAction";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import parser from "html-react-parser";
 
-import {
-  ArchiveBoxArrowDownIcon,
-  PencilSquareIcon,
-  TrashIcon,
-} from "@heroicons/react/24/solid";
+import { showFormattedDate } from "../utils/local-data";
 
-import { showFormattedDate } from "../utils";
-
-function Note({
-  className,
-  id,
-  title,
-  createdAt,
-  body,
-  archived,
-  archiveNote,
-  activeNote,
-  deleteNote,
-}) {
+function Note({ className, id, title, createdAt, body }) {
   return (
     <div className={className}>
-      <h1 className="font-semibold text-2xl truncate">{title}</h1>
+      <Link to={`/notes/${id}`}>
+        <h1 className="font-semibold hover:underline text-2xl truncate">
+          {title}
+        </h1>
+      </Link>
       <span className="text-sm">{showFormattedDate(createdAt)}</span>
-      <p className="text-md my-4">{body}</p>
-      <div className="button-action flex justify-center gap-8">
-        {archived === false ? (
-          <ButtonAction
-            className="archive-button"
-            onClick={() => archiveNote(id)}
-          >
-            <ArchiveBoxArrowDownIcon className="size-8 text-green-400 hover:text-green-600" />
-          </ButtonAction>
-        ) : (
-          <ButtonAction
-            className="active-button"
-            onClick={() => activeNote(id)}
-          >
-            <PencilSquareIcon className="size-8 text-green-400 hover:text-green-600" />
-          </ButtonAction>
-        )}
-
-        <ButtonAction className="delete-button" onClick={() => deleteNote(id)}>
-          <TrashIcon className="size-8 text-red-400 hover:text-red-600" />
-        </ButtonAction>
-      </div>
+      <p className="text-md my-4 line-clamp-3 lg:line-clamp-4 xl:line-clamp-5 text-ellipsis">
+        {parser(body)}
+      </p>
     </div>
   );
 }
+
+Note.propTypes = {
+  className: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
+  body: PropTypes.string.isRequired,
+};
 
 export default Note;

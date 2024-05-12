@@ -1,13 +1,17 @@
-// eslint-disable-next-line react/prop-types
-function ButtonAction({ className, onClick, children }) {
-  const buttonClassName = "bg-white p-2 rounded-lg".split(" ");
-  buttonClassName.push(className);
+import PropTypes from "prop-types";
 
+function ButtonAction({ className, onClick, children }) {
   return (
-    <button className={buttonClassName.join(" ")} onClick={onClick}>
+    <button className={className} onClick={onClick}>
       {children}
     </button>
   );
 }
+
+ButtonAction.propTypes = {
+  className: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  children: PropTypes.object.isRequired,
+};
 
 export default ButtonAction;

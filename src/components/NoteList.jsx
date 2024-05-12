@@ -1,23 +1,15 @@
-/* eslint-disable react/prop-types */
-import Heading from "./Heading";
+import PropTypes from "prop-types";
+
 import Note from "./Note";
 
-function NoteList({
-  name,
-  className,
-  notes,
-  archiveNote,
-  activeNote,
-  deleteNote,
-}) {
+function NoteList({ className, notes }) {
   const notelistClassName = "my-20 w-full lg:w-9/12 2xl:w-3/5 md:mx-auto".split(
     " "
   );
   notelistClassName.push(className);
   return (
     <section className={notelistClassName.join(" ")}>
-      <Heading>{name}</Heading>
-      <div className="note-list grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-x-4 gap-y-12 ">
+      <div className="note-list grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 gap-x-4 gap-y-12 ">
         {notes.length > 0 ? (
           notes.map((note) => (
             <Note
@@ -25,9 +17,6 @@ function NoteList({
               after:border-yellow-400"
               key={note.id}
               {...note}
-              archiveNote={archiveNote}
-              activeNote={activeNote}
-              deleteNote={deleteNote}
             />
           ))
         ) : (
@@ -37,5 +26,10 @@ function NoteList({
     </section>
   );
 }
+
+NoteList.propTypes = {
+  className: PropTypes.string,
+  notes: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 export default NoteList;

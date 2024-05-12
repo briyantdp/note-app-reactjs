@@ -1,9 +1,11 @@
+import { Link } from "react-router-dom";
+
 function LogoHeader() {
   return (
     <div className="logo">
-      <a href="#">
+      <Link to="/">
         <img src="/vite.svg" alt="Notes Logo" />
-      </a>
+      </Link>
     </div>
   );
 }

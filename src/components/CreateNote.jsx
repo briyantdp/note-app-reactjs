@@ -1,31 +1,14 @@
-/* eslint-disable react/prop-types */
+import PropTypes from "prop-types";
 
-import { useState } from "react";
-
-function CreateNote({ addNote }) {
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-
-  const handleChangeTitle = (event) => {
-    setTitle(event.target.value.length <= 50 ? event.target.value : title);
-  };
-
-  const handleChangeBody = (event) => {
-    setBody(event.target.value);
-  };
-
-  const onSubmitEventHandler = (event) => {
-    event.preventDefault();
-    addNote({ title, body });
-    setTitle("");
-    setBody("");
-  };
-
+function CreateNote({
+  title,
+  body,
+  handleChangeTitle,
+  handleChangeBody,
+  onSubmitEventHandler,
+}) {
   return (
-    <section className="create-note my-8">
-      <h1 className="font-semibold font-mono text-4xl leading-normal text-white text-center">
-        Buat Catatan
-      </h1>
+    <section className="create-note my-4">
       <form
         id="addNote"
         className="flex flex-col justify-around items-center"
@@ -38,21 +21,20 @@ function CreateNote({ addNote }) {
           type="text"
           name="titleNote"
           id="titleNote"
-          className="w-full lg:w-9/12 xl:w-2/4 2xl:w-2/6 px-2 py-2 my-2 rounded-lg outline-none"
+          className="w-full lg:w-9/12 xl:w-2/4 2xl:w-2/6 px-2 py-2 my-2 rounded-lg outline-none bg-transparent focus:outline-1 focus:outline-white text-white"
           placeholder="Judul catatan..."
           required
           value={title}
           onChange={handleChangeTitle}
         />
-        <textarea
-          name="descriptionNote"
+        <div
           id="descriptionNote"
-          required
-          className="w-full lg:w-9/12 xl:w-2/4 2xl:w-2/6 h-48 px-2 py-2 my-2 rounded-lg outline-none"
-          placeholder="Tuliskan catatanmu di sini..."
+          className="w-full lg:w-9/12 xl:w-2/4 2xl:w-2/6 h-48 px-2 py-2 my-2 rounded-lg outline-none bg-transparent focus:outline-1 focus:outline-white text-white"
+          data-placeholder="Tuliskan catatanmu di sini..."
+          contentEditable
           value={body}
-          onChange={handleChangeBody}
-        ></textarea>
+          onInput={handleChangeBody}
+        ></div>
         <button
           type="submit"
           className="w-full lg:w-9/12 xl:w-2/4 2xl:w-2/6 px-2 py-2 my-2 rounded-lg bg-orange-600 hover:bg-orange-800 text-white"
@@ -63,5 +45,13 @@ function CreateNote({ addNote }) {
     </section>
   );
 }
+
+CreateNote.propTypes = {
+  title: PropTypes.string.isRequired,
+  body: PropTypes.string.isRequired,
+  handleChangeTitle: PropTypes.func.isRequired,
+  handleChangeBody: PropTypes.func.isRequired,
+  onSubmitEventHandler: PropTypes.func.isRequired,
+};
 
 export default CreateNote;

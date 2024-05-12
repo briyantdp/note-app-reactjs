@@ -1,17 +1,11 @@
-/* eslint-disable react/prop-types */
-// eslint-disable-next-line react/prop-types
 import LogoHeader from "./LogoHeader";
-import InputSearch from "./InputSearch";
+import Navigation from "./Navigation";
 
-function Header({ query, handleOnChange, handleClickToSearchQuery }) {
+function Header() {
   return (
-    <header className="header py-8 flex flex-col md:flex-row justify-around items-center">
+    <header className="header py-8 flex justify-around items-center">
       <LogoHeader />
-      <InputSearch
-        query={query}
-        handleOnChange={handleOnChange}
-        handleClickToSearchQuery={handleClickToSearchQuery}
-      />
+      <Navigation />
     </header>
   );
 }
